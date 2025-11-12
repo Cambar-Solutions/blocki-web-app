@@ -21,9 +21,11 @@ const currentNetwork = NETWORKS.testnet;
 export const server = new StellarSdk.Horizon.Server(currentNetwork.horizonUrl);
 
 // Initialize Soroban RPC Server
-export const sorobanServer = new StellarSdk.SorobanRpc.Server(
-  currentNetwork.sorobanRpcUrl
-);
+// Note: Soroban RPC may require different import in SDK v14+
+// Uncomment when needed for smart contract interactions
+// export const sorobanServer = new StellarSdk.SorobanRpc.Server(
+//   currentNetwork.sorobanRpcUrl
+// );
 
 /**
  * Get account details from the network
