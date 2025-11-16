@@ -97,4 +97,139 @@ export const stellarService = {
       throw error
     }
   },
+
+  // Create property token (asset)
+  createPropertyToken: async (issuerPublicKey, assetCode) => {
+    try {
+      const issuerAccount = await server.loadAccount(issuerPublicKey)
+
+      const transaction = new StellarSdk.TransactionBuilder(issuerAccount, {
+        fee: StellarSdk.BASE_FEE,
+        networkPassphrase: NETWORK_PASSPHRASE,
+      })
+        .addOperation(
+          StellarSdk.Operation.setOptions({
+            homeDomain: 'blocki.app',
+          })
+        )
+        .setTimeout(180)
+        .build()
+
+      return transaction.toXDR()
+    } catch (error) {
+      console.error('Error creating token:', error)
+      throw error
+    }
+  },
+
+  // Build trustline transaction (buyer must trust the property token)
+  buildTrustlineTransaction: async (buyerPublicKey, issuerPublicKey, assetCode) => {
+    try {
+      const buyerAccount = await server.loadAccount(buyerPublicKey)
+      const asset = new StellarSdk.Asset(assetCode, issuerPublicKey)
+
+      const transaction = new StellarSdk.TransactionBuilder(buyerAccount, {
+        fee: StellarSdk.BASE_FEE,
+        networkPassphrase: NETWORK_PASSPHRASE,
+      })
+        .addOperation(
+          StellarSdk.Operation.changeTrust({
+            asset: asset,
+            limit: '10000000', // Max tokens buyer can hold
+          })
+        )
+        .setTimeout(180)
+        .build()
+
+      return transaction.toXDR()
+    } catch (error) {
+      console.error('Error building trustline:', error)
+      throw error
+    }
+  },
+
+  // Build token purchase transaction (property tokens + XLM payment)
+  buildTokenPurchaseTransaction: async (
+    buyerPublicKey,
+    issuerPublicKey,
+    platformPublicKey,
+    assetCode,
+    tokenAmount,
+    xlmPrice
+  ) => {
+    try {
+      const buyerAccount = await server.loadAccount(buyerPublicKey)
+      const propertyAsset = new StellarSdk.Asset(assetCode, issuerPublicKey)
+
+      const transaction = new StellarSdk.TransactionBuilder(buyerAccount, {
+        fee: StellarSdk.BASE_FEE,
+        networkPassphrase: NETWORK_PASSPHRASE,
+      })
+        // Payment 1: Buyer pays platform in XLM
+        .addOperation(
+          StellarSdk.Operation.payment({
+            destination: platformPublicKey,
+            asset: StellarSdk.Asset.native(),
+            amount: xlmPrice.toString(),
+          })
+        )
+        // Payment 2: Platform sends property tokens to buyer
+        .addMemo(StellarSdk.Memo.text(`BLOCKI:${assetCode}:${tokenAmount}`))
+        .setTimeout(180)
+        .build()
+
+      return transaction.toXDR()
+    } catch (error) {
+      console.error('Error building purchase transaction:', error)
+      throw error
+    }
+  },
+
+  // Send property tokens from issuer to buyer
+  sendPropertyTokens: async (issuerPublicKey, buyerPublicKey, assetCode, amount) => {
+    try {
+      const issuerAccount = await server.loadAccount(issuerPublicKey)
+      const asset = new StellarSdk.Asset(assetCode, issuerPublicKey)
+
+      const transaction = new StellarSdk.TransactionBuilder(issuerAccount, {
+        fee: StellarSdk.BASE_FEE,
+        networkPassphrase: NETWORK_PASSPHRASE,
+      })
+        .addOperation(
+          StellarSdk.Operation.payment({
+            destination: buyerPublicKey,
+            asset: asset,
+            amount: amount.toString(),
+          })
+        )
+        .setTimeout(180)
+        .build()
+
+      return transaction.toXDR()
+    } catch (error) {
+      console.error('Error sending tokens:', error)
+      throw error
+    }
+  },
+
+  // Get asset holders (for property token distribution tracking)
+  getAssetHolders: async (assetCode, issuerPublicKey) => {
+    try {
+      const asset = new StellarSdk.Asset(assetCode, issuerPublicKey)
+      const accounts = await server.accounts().forAsset(asset).call()
+      return accounts.records
+    } catch (error) {
+      console.error('Error getting asset holders:', error)
+      throw error
+    }
+  },
+
+  // Convert MXN to XLM (simplified - in production use price oracle)
+  convertMxnToXlm: (mxnAmount) => {
+    // Simplified conversion rate (in production, fetch from oracle)
+    const XLM_TO_USD = 0.12 // $0.12 USD per XLM
+    const USD_TO_MXN = 18.5 // ~18.5 MXN per USD
+    const XLM_TO_MXN = XLM_TO_USD * USD_TO_MXN // ~2.22 MXN per XLM
+    return (mxnAmount / XLM_TO_MXN).toFixed(7)
+  },
 }

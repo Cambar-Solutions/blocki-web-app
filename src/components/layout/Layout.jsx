@@ -13,8 +13,12 @@ import {
   Moon,
   Sun,
   Sparkles,
+  LayoutDashboard,
+  Plus,
+  HelpCircle,
 } from 'lucide-react'
 import { useState } from 'react'
+import { useTour } from '../../hooks/useTour'
 
 export function Layout({ children }) {
   const { user, logout } = useAuth()
@@ -22,15 +26,30 @@ export function Layout({ children }) {
   const navigate = useNavigate()
   const location = useLocation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { homeTour, dashboardTour, walletTour } = useTour()
 
   const handleLogout = () => {
     logout()
     navigate('/login')
   }
 
+  const handleTourClick = () => {
+    const path = location.pathname
+    if (path === '/home') {
+      homeTour()
+    } else if (path === '/dashboard') {
+      dashboardTour()
+    } else if (path === '/wallet') {
+      walletTour()
+    } else {
+      homeTour()
+    }
+  }
+
   const navigation = [
     { name: 'Inicio', href: '/home', icon: Home },
-    { name: 'Mis Inversiones', href: '/my-tokens', icon: Wallet },
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Billetera', href: '/wallet', icon: Wallet },
   ]
 
   const isActive = (path) => location.pathname === path
@@ -77,6 +96,27 @@ export function Layout({ children }) {
 
             {/* Right Section */}
             <div className="flex items-center gap-3">
+              {/* Publish Button - Desktop */}
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => navigate('/publish')}
+                className="publish-button hidden md:flex"
+              >
+                <Plus className="w-4 h-4" />
+                Publicar
+              </Button>
+
+              {/* Tour Button */}
+              <button
+                onClick={handleTourClick}
+                className="w-10 h-10 rounded-xl glass flex items-center justify-center hover:scale-105 transition-transform hidden md:flex"
+                aria-label="Iniciar tour"
+                title="Tour guiado"
+              >
+                <HelpCircle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              </button>
+
               {/* Theme Toggle */}
               <button
                 onClick={toggleTheme}

@@ -27,27 +27,27 @@ export function PropertyCard({ property }) {
   return (
     <Card
       hover
-      className="cursor-pointer overflow-hidden group"
+      className="cursor-pointer overflow-hidden group animate-fadeIn"
       onClick={() => navigate(`/property/${property.id}`)}
     >
       {/* Image */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-56 overflow-hidden">
         <img
           src={property.images[0]}
           alt={property.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
 
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex gap-2">
-          <Badge variant="default" className="backdrop-blur-sm bg-white/90 dark:bg-gray-800/90">
+        <div className="absolute top-3 left-3 flex gap-2 transform transition-all duration-300 group-hover:scale-105">
+          <Badge variant="default" className="backdrop-blur-md bg-white/95 dark:bg-gray-800/95 shadow-lg">
             {getTypeLabel(property.type)}
           </Badge>
         </div>
 
-        <div className="absolute top-3 right-3">
-          <Badge variant="success" className="backdrop-blur-sm">
+        <div className="absolute top-3 right-3 transform transition-all duration-300 group-hover:scale-105">
+          <Badge variant="success" className="backdrop-blur-md shadow-lg">
             {property.tokenizedPercentage}% Tokenizado
           </Badge>
         </div>

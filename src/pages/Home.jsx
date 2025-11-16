@@ -3,6 +3,7 @@ import { Layout } from '../components/layout/Layout'
 import { PropertyCard } from '../components/property/PropertyCard'
 import { Input } from '../components/ui/Input'
 import { Button } from '../components/ui/Button'
+import { HowItWorksModal } from '../components/HowItWorks'
 import { mockProperties, filterProperties } from '../data/mockProperties'
 import { Search, Filter, TrendingUp, Shield, Zap, X } from 'lucide-react'
 
@@ -11,6 +12,7 @@ export function Home() {
   const [selectedType, setSelectedType] = useState('')
   const [selectedCity, setSelectedCity] = useState('')
   const [showFilters, setShowFilters] = useState(false)
+  const [showHowItWorks, setShowHowItWorks] = useState(false)
 
   const filters = {
     search: searchTerm,
@@ -36,46 +38,126 @@ export function Home() {
   const hasActiveFilters = searchTerm || selectedType || selectedCity
 
   return (
-    <Layout>
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnptMC00YzUuNTIzIDAgMTAgNC40NzcgMTAgMTBzLTQuNDc3IDEwLTEwIDEwLTEwLTQuNDc3LTEwLTEwIDQuNDc3LTEwIDEwLTEweiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuMDUiLz48L2c+PC9zdmc+')] opacity-20"></div>
+    <>
+      <HowItWorksModal isOpen={showHowItWorks} onClose={() => setShowHowItWorks(false)} />
+      <Layout>
+      {/* Hero Section - Enhanced */}
+      <div className="hero-section relative bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 overflow-hidden min-h-[600px] flex items-center">
+        {/* Animated Grid Background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 animate-slideUp">
-              Invierte en el Futuro
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">
-                del Real Estate
-              </span>
-            </h1>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto animate-fadeIn">
-              Compra fracciones de propiedades verificadas en LATAM con blockchain
-            </p>
+        {/* Floating Orbs */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-500/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8">
-              <div className="glass backdrop-blur-xl rounded-2xl p-6 animate-fadeIn" style={{ animationDelay: '0.1s' }}>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <TrendingUp className="w-5 h-5 text-green-300" />
-                  <p className="text-3xl font-bold text-white">{mockProperties.length}</p>
-                </div>
-                <p className="text-white/80 text-sm">Propiedades Activas</p>
+        {/* 3D Building Illustration SVG */}
+        <svg className="absolute bottom-0 right-0 w-1/3 h-auto opacity-10" viewBox="0 0 200 300" fill="none">
+          <rect x="40" y="80" width="50" height="200" fill="url(#building1)" opacity="0.6"/>
+          <rect x="100" y="50" width="60" height="230" fill="url(#building2)" opacity="0.7"/>
+          <rect x="10" y="120" width="40" height="160" fill="url(#building3)" opacity="0.5"/>
+          <defs>
+            <linearGradient id="building1" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#60A5FA" />
+              <stop offset="100%" stopColor="#3B82F6" />
+            </linearGradient>
+            <linearGradient id="building2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#A78BFA" />
+              <stop offset="100%" stopColor="#8B5CF6" />
+            </linearGradient>
+            <linearGradient id="building3" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#F472B6" />
+              <stop offset="100%" stopColor="#EC4899" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6 animate-fadeIn">
+                <Shield className="w-4 h-4 text-green-300" />
+                <span className="text-sm text-white/90 font-medium">Verificado en Stellar Blockchain</span>
               </div>
-              <div className="glass backdrop-blur-xl rounded-2xl p-6 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Shield className="w-5 h-5 text-blue-300" />
-                  <p className="text-3xl font-bold text-white">100%</p>
-                </div>
-                <p className="text-white/80 text-sm">Verificadas</p>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 animate-slideUp leading-tight">
+                Democratizamos
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-300 to-pink-300">
+                  el Real Estate
+                </span>
+                <br />
+                en Latinoamérica
+              </h1>
+
+              <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-xl animate-fadeIn leading-relaxed">
+                Invierte desde <span className="text-green-300 font-bold">$2,500 MXN</span> en propiedades tokenizadas.
+                Sin intermediarios, con seguridad blockchain y retornos verificables.
+              </p>
+
+              <div className="flex flex-wrap gap-4 mb-12 animate-fadeIn">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="bg-white text-purple-900 hover:bg-white/90 shadow-xl hover:shadow-2xl transition-all hover:scale-105"
+                  onClick={() => document.getElementById('properties-section')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  <TrendingUp className="w-5 h-5" />
+                  Explorar Propiedades
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
+                  onClick={() => setShowHowItWorks(true)}
+                >
+                  <Shield className="w-5 h-5" />
+                  Cómo Funciona
+                </Button>
               </div>
-              <div className="glass backdrop-blur-xl rounded-2xl p-6 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Zap className="w-5 h-5 text-yellow-300" />
-                  <p className="text-3xl font-bold text-white">8.5%</p>
+
+              {/* Stats Row */}
+              <div className="grid grid-cols-3 gap-6 animate-fadeIn">
+                <div>
+                  <p className="text-3xl font-bold text-white mb-1">{mockProperties.length}</p>
+                  <p className="text-white/60 text-sm">Propiedades</p>
                 </div>
-                <p className="text-white/80 text-sm">ROI Promedio</p>
+                <div>
+                  <p className="text-3xl font-bold text-green-300 mb-1">8.5%</p>
+                  <p className="text-white/60 text-sm">ROI Promedio</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-blue-300 mb-1">100%</p>
+                  <p className="text-white/60 text-sm">Verificadas</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right - Feature Cards */}
+            <div className="hidden lg:grid grid-cols-1 gap-4 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+              <div className="glass backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all hover:scale-105">
+                <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                  <Shield className="w-6 h-6 text-blue-300" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">KYC Verificado</h3>
+                <p className="text-white/70 text-sm">Cumplimiento legal con verificación de identidad en toda LATAM</p>
+              </div>
+
+              <div className="glass backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all hover:scale-105">
+                <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                  <Zap className="w-6 h-6 text-purple-300" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Stellar Blockchain</h3>
+                <p className="text-white/70 text-sm">Transacciones rápidas, seguras y con fees mínimos</p>
+              </div>
+
+              <div className="glass backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all hover:scale-105">
+                <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4">
+                  <TrendingUp className="w-6 h-6 text-green-300" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Inversión Accesible</h3>
+                <p className="text-white/70 text-sm">Accede al mercado inmobiliario desde fracciones pequeñas</p>
               </div>
             </div>
           </div>
@@ -83,7 +165,7 @@ export function Home() {
       </div>
 
       {/* Search & Filters Section */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-30 shadow-sm">
+      <div className="search-section bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-30 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row gap-3">
             {/* Search */}
@@ -166,7 +248,7 @@ export function Home() {
       </div>
 
       {/* Properties Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div id="properties-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Propiedades Disponibles
@@ -191,12 +273,13 @@ export function Home() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
+            {filteredProperties.map((property, index) => (
+              <PropertyCard key={property.id} property={property} className={index === 0 ? 'property-card' : ''} />
             ))}
           </div>
         )}
       </div>
     </Layout>
+    </>
   )
 }

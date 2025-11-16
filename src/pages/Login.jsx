@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useTheme } from '../contexts/ThemeContext'
 import { Button } from '../components/ui/Button'
 import { Input, Label } from '../components/ui/Input'
+import { Card, CardContent } from '../components/ui/Card'
 import {
   Mail,
   Lock,
@@ -15,6 +16,12 @@ import {
   ArrowRight,
   Moon,
   Sun,
+  Shield,
+  TrendingUp,
+  Wallet,
+  Globe,
+  Zap,
+  Users,
 } from 'lucide-react'
 
 export function Login() {
@@ -96,78 +103,67 @@ export function Login() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* Animated Background */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center p-4">
+      {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-blue-500/30 to-purple-500/30 dark:from-blue-500/20 dark:to-purple-500/20 rounded-full blur-3xl animate-blob"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-green-500/30 to-emerald-500/30 dark:from-green-500/20 dark:to-emerald-500/20 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-r from-pink-500/20 to-orange-500/20 dark:from-pink-500/10 dark:to-orange-500/10 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
-
-        {/* Waves decoration */}
-        <svg className="absolute bottom-0 left-0 w-full h-64 opacity-20 dark:opacity-10" viewBox="0 0 1440 320" preserveAspectRatio="none">
-          <path fill="url(#gradient1)" fillOpacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-          <defs>
-            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#3B82F6" />
-              <stop offset="100%" stopColor="#8B5CF6" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <svg className="absolute top-0 right-0 w-96 h-96 opacity-10 dark:opacity-5" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="url(#gradient2)" strokeWidth="0.5" />
-          <circle cx="100" cy="100" r="60" fill="none" stroke="url(#gradient2)" strokeWidth="0.5" />
-          <circle cx="100" cy="100" r="40" fill="none" stroke="url(#gradient2)" strokeWidth="0.5" />
-          <defs>
-            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#10B981" />
-              <stop offset="100%" stopColor="#3B82F6" />
-            </linearGradient>
-          </defs>
-        </svg>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
 
-      {/* Theme Toggle */}
-      <button
-        onClick={toggleTheme}
-        className="fixed top-6 right-6 z-50 w-12 h-12 rounded-full glass flex items-center justify-center hover:scale-110 transition-transform duration-200 shadow-lg"
-        aria-label="Toggle theme"
-      >
-        {theme === 'dark' ? (
-          <Sun className="w-5 h-5 text-yellow-400" />
-        ) : (
-          <Moon className="w-5 h-5 text-gray-700" />
-        )}
-      </button>
-
-      {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          {/* Logo & Header */}
-          <div className="text-center mb-8 animate-slideUp">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-600 to-purple-600 mb-6 shadow-2xl shadow-blue-500/50 dark:shadow-blue-500/30">
-              <Building2 className="w-10 h-10 text-white" />
+      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-8 items-center relative z-10">
+        {/* Left side - Branding */}
+        <div className="text-white space-y-8 hidden md:block">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+              <Shield className="w-5 h-5" />
+              <span className="text-sm font-semibold">Powered by Stellar Blockchain</span>
             </div>
-            <h1 className="text-4xl font-bold mb-2">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-                Blocki
-              </span>
+
+            <h1 className="text-5xl font-bold leading-tight">
+              Democratizamos el Real Estate en Latinoamérica
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 flex items-center justify-center gap-2">
-              <Sparkles className="w-4 h-4" />
-              Invierte en Real Estate Tokenizado
+
+            <p className="text-xl text-blue-100">
+              Invierte en propiedades tokenizadas desde $2,500 MXN con la seguridad y transparencia de blockchain
             </p>
           </div>
 
-          {/* Login Card */}
-          <div className="glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl border border-white/20 dark:border-gray-700/50 animate-fadeIn">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                Bienvenido de nuevo
-              </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Ingresa tus credenciales para continuar
-              </p>
+          <div className="space-y-4">
+            <FeatureItem
+              icon={<Wallet className="w-6 h-6" />}
+              title="Inversión Accesible"
+              description="Accede al mercado inmobiliario con montos desde $2,500 MXN"
+            />
+            <FeatureItem
+              icon={<Shield className="w-6 h-6" />}
+              title="Seguridad Blockchain"
+              description="Todas las transacciones verificadas en Stellar Network"
+            />
+            <FeatureItem
+              icon={<TrendingUp className="w-6 h-6" />}
+              title="Retornos Verificables"
+              description="Seguimiento en tiempo real de tu portafolio de inversiones"
+            />
+            <FeatureItem
+              icon={<Globe className="w-6 h-6" />}
+              title="Mercado LATAM"
+              description="Propiedades verificadas en toda Latinoamérica"
+            />
+          </div>
+        </div>
+
+        {/* Right side - Login Form */}
+        <Card className="shadow-2xl">
+          <CardContent className="p-8">
+            <div className="mb-8 text-center">
+              <div className="inline-flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg">
+                  <Building2 className="w-8 h-8 text-white" />
+                </div>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Bienvenido a Blocki</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Inicia sesión en tu cuenta</p>
             </div>
 
             {/* Error Message */}
@@ -283,13 +279,22 @@ export function Login() {
                 </Link>
               </p>
             </div>
-          </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
 
-          {/* Footer */}
-          <p className="text-center text-xs text-gray-500 dark:text-gray-400 mt-6">
-            Powered by Stellar Blockchain
-          </p>
-        </div>
+function FeatureItem({ icon, title, description }) {
+  return (
+    <div className="flex items-start gap-4">
+      <div className="flex-shrink-0 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/20">
+        {icon}
+      </div>
+      <div>
+        <h3 className="font-semibold text-lg">{title}</h3>
+        <p className="text-blue-100 text-sm">{description}</p>
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { Layout } from '../components/layout/Layout'
 import { Button } from '../components/ui/Button'
@@ -26,6 +26,11 @@ export function PropertyView() {
   const property = getPropertyById(id)
   const [selectedImage, setSelectedImage] = useState(0)
   const [tokenAmount, setTokenAmount] = useState(1)
+
+  // Scroll to top when component mounts or when property ID changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [id])
 
   if (!property) {
     return (

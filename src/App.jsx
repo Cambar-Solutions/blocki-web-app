@@ -9,6 +9,9 @@ import { Login } from './pages/Login'
 import { Register } from './pages/Register'
 import { Home } from './pages/Home'
 import { PropertyView } from './pages/PropertyView'
+import { Dashboard } from './pages/Dashboard'
+import { Wallet } from './pages/Wallet'
+import { PublishProperty } from './pages/PublishProperty'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -95,6 +98,30 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <Home />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/wallet"
+                    element={
+                      <ProtectedRoute>
+                        <Wallet />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/publish"
+                    element={
+                      <ProtectedRoute>
+                        <PublishProperty />
                       </ProtectedRoute>
                     }
                   />
