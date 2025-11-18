@@ -88,10 +88,19 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 cursor-default;
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Solo elementos interactivos y de texto tendrán cursores específicos */
+  input, textarea {
+    @apply cursor-text;
+  }
+
+  button, a, [role="button"], select {
+    @apply cursor-pointer;
   }
 }
 

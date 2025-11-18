@@ -8,7 +8,7 @@ import { Button } from '../Button';
  * Main navigation header component
  * Responsive header with navigation links and wallet connection
  */
-export default function Header() {
+export default function Header({ onLearnMoreClick }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigation = [
@@ -46,7 +46,7 @@ export default function Header() {
         </div>
 
         {/* Desktop navigation */}
-        <div className="hidden lg:flex lg:gap-x-8">
+        <div className="hidden lg:flex lg:gap-x-8 lg:items-center">
           {navigation.map((item) => (
             <Link
               key={item.name}
@@ -56,6 +56,14 @@ export default function Header() {
               {item.name}
             </Link>
           ))}
+          {onLearnMoreClick && (
+            <button
+              onClick={onLearnMoreClick}
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-primary transition-colors"
+            >
+              Saber más
+            </button>
+          )}
         </div>
 
         {/* Wallet Connect */}
@@ -78,6 +86,17 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
+            {onLearnMoreClick && (
+              <button
+                onClick={() => {
+                  onLearnMoreClick();
+                  setMobileMenuOpen(false);
+                }}
+                className="block w-full text-left rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+              >
+                Saber más
+              </button>
+            )}
             <div className="pt-4">
               <WalletConnect />
             </div>
