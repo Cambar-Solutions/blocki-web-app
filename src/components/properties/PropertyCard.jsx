@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
-import { Badge } from '../ui/badge';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/Card';
+import { Badge } from '../ui/Badge';
 import { Button } from '../Button';
 import { MapPin, Home, DollarSign } from 'lucide-react';
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useListings, useMarketStats } from '../hooks/useMarketplace';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
+import { Badge } from '../components/ui/Badge';
 import { Spinner } from '../components/ui/spinner';
 import { TrendingUp, ShoppingCart, DollarSign, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';

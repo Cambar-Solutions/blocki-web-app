@@ -1,7 +1,7 @@
 import { useWallet } from '../hooks/useWallet';
 import { usePortfolio, useMyProperties, useMyTransactions } from '../hooks/useUser';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
+import { Badge } from '../components/ui/Badge';
 import { Spinner } from '../components/ui/spinner';
 import WalletConnect from '../components/wallet/WalletConnect';
 import WalletStatus from '../components/wallet/WalletStatus';

@@ -1,7 +1,7 @@
 import { useWallet } from '../../hooks/useWallet';
 import { useUser } from '../../hooks/useUser';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Badge } from '../ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/Card';
+import { Badge } from '../ui/Badge';
 import { Wallet, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 
 /**

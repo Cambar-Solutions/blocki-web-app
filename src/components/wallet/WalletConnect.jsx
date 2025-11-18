@@ -2,7 +2,7 @@ import { useWallet } from '../../hooks/useWallet';
 import { Button } from '../Button';
 import { Wallet, LogOut, AlertCircle } from 'lucide-react';
 import { Spinner } from '../ui/spinner';
-import { Badge } from '../ui/badge';
+import { Badge } from '../ui/Badge';
 
 /**
  * Wallet connection component

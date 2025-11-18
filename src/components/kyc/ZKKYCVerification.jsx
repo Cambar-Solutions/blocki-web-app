@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card';
-import { Button } from '../Button';
-import { Input, Label } from '../ui/input';
-import { Badge } from '../ui/badge';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/Card';
+import { Button } from '../ui/Button';
+import { Input, Label } from '../ui/Input';
+import { Badge } from '../ui/Badge';
 import { useZKKYC } from '../../hooks/useZKKYC';
 import {
   Shield,
