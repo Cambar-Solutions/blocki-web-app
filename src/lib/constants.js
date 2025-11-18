@@ -7,28 +7,54 @@ export const NETWORK_PASSPHRASE = import.meta.env.VITE_NETWORK_PASSPHRASE || 'Te
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 export const GRAPHQL_URL = import.meta.env.VITE_GRAPHQL_URL || 'http://localhost:3000/graphql';
 
-// Contract IDs (will be populated after deployment)
+/**
+ * Contract IDs (will be populated after deployment)
+ * @type {Readonly<{
+ *   PROPERTY_TOKEN_DEPLOYER: string,
+ *   MARKETPLACE: string,
+ *   ESCROW: string,
+ *   REGISTRY: string
+ * }>}
+ */
 export const CONTRACT_IDS = {
   PROPERTY_TOKEN_DEPLOYER: import.meta.env.VITE_PROPERTY_TOKEN_DEPLOYER_ID || '',
   MARKETPLACE: import.meta.env.VITE_MARKETPLACE_CONTRACT_ID || '',
   ESCROW: import.meta.env.VITE_ESCROW_CONTRACT_ID || '',
   REGISTRY: import.meta.env.VITE_REGISTRY_CONTRACT_ID || '',
-} as const;
+};
 
-// Feature flags
+/**
+ * Feature flags
+ * @type {Readonly<{
+ *   KYC_ENABLED: boolean,
+ *   FIAT_CONVERSION_ENABLED: boolean
+ * }>}
+ */
 export const FEATURES = {
   KYC_ENABLED: import.meta.env.VITE_ENABLE_KYC === 'true',
   FIAT_CONVERSION_ENABLED: import.meta.env.VITE_ENABLE_FIAT_CONVERSION === 'true',
-} as const;
+};
 
-// Transaction settings
+/**
+ * Transaction settings
+ * @type {Readonly<{
+ *   BASE_FEE: string,
+ *   TIMEOUT: number
+ * }>}
+ */
 export const TX_SETTINGS = {
   BASE_FEE: '100',
   TIMEOUT: 180, // seconds
-} as const;
+};
 
-// Freighter wallet settings
+/**
+ * Freighter wallet settings
+ * @type {Readonly<{
+ *   ENABLED: boolean,
+ *   NETWORK: 'TESTNET' | 'PUBLIC'
+ * }>}
+ */
 export const FREIGHTER_SETTINGS = {
   ENABLED: import.meta.env.VITE_FREIGHTER_ENABLED === 'true',
-  NETWORK: STELLAR_NETWORK.toUpperCase() as 'TESTNET' | 'PUBLIC',
-} as const;
+  NETWORK: /** @type {'TESTNET' | 'PUBLIC'} */ (STELLAR_NETWORK.toUpperCase()),
+};

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva } from "class-variance-authority"
 import { cn } from "../lib/utils"
 
 const buttonVariants = cva(
@@ -28,13 +28,18 @@ const buttonVariants = cva(
   }
 )
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
-}
+/**
+ * @typedef {Object} ButtonProps
+ * @property {string} [className]
+ * @property {'default'|'destructive'|'outline'|'secondary'|'ghost'|'link'} [variant]
+ * @property {'default'|'sm'|'lg'|'icon'} [size]
+ * @property {boolean} [asChild]
+ */
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+/**
+ * @type {React.ForwardRefExoticComponent<ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement> & React.RefAttributes<HTMLButtonElement>>}
+ */
+const Button = React.forwardRef(
   ({ className, variant, size, ...props }, ref) => {
     return (
       <button

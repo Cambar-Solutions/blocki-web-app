@@ -1,8 +1,31 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { usersAPI, uploadKYCDocuments } from '../services/api';
 import toast from 'react-hot-toast';
-import type { UpdateUserDto, KYCDocuments } from '../types/user';
 
+/**
+ * @typedef {Object} UpdateUserDto
+ * @property {string} [name]
+ * @property {string} [email]
+ * @property {string} [phone]
+ * @property {string} [country]
+ */
+
+/**
+ * @typedef {Object} KYCDocuments
+ * @property {File} idDocument
+ * @property {File} [proofOfAddress]
+ * @property {File} [selfie]
+ */
+
+/**
+ * @typedef {Object} TransactionsParams
+ * @property {number} [limit]
+ * @property {number} [offset]
+ */
+
+/**
+ * Fetch current user profile
+ */
 export function useUser() {
   return useQuery({
     queryKey: ['user-profile'],
@@ -14,11 +37,14 @@ export function useUser() {
   });
 }
 
+/**
+ * Update user profile mutation
+ */
 export function useUpdateUser() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: UpdateUserDto) => {
+    mutationFn: async (/** @type {UpdateUserDto} */ data) => {
       const response = await usersAPI.updateMe(data);
       return response.data;
     },
@@ -34,6 +60,9 @@ export function useUpdateUser() {
   });
 }
 
+/**
+ * Fetch KYC verification status
+ */
 export function useKYCStatus() {
   return useQuery({
     queryKey: ['kyc-status'],
@@ -44,11 +73,14 @@ export function useKYCStatus() {
   });
 }
 
+/**
+ * Initiate KYC verification mutation
+ */
 export function useInitiateKYC() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (documents: KYCDocuments) => {
+    mutationFn: async (/** @type {KYCDocuments} */ documents) => {
       const response = await uploadKYCDocuments(documents);
       return response.data;
     },
@@ -65,6 +97,9 @@ export function useInitiateKYC() {
   });
 }
 
+/**
+ * Fetch user's investment portfolio
+ */
 export function usePortfolio() {
   return useQuery({
     queryKey: ['portfolio'],
@@ -76,7 +111,11 @@ export function usePortfolio() {
   });
 }
 
-export function useMyProperties(limit?: number) {
+/**
+ * Fetch user's owned properties
+ * @param {number} [limit]
+ */
+export function useMyProperties(limit) {
   return useQuery({
     queryKey: ['my-properties', limit],
     queryFn: async () => {
@@ -86,7 +125,11 @@ export function useMyProperties(limit?: number) {
   });
 }
 
-export function useMyTransactions(params?: { limit?: number; offset?: number }) {
+/**
+ * Fetch user's transaction history
+ * @param {TransactionsParams} [params]
+ */
+export function useMyTransactions(params) {
   return useQuery({
     queryKey: ['my-transactions', params],
     queryFn: async () => {

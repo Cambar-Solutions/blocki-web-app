@@ -1,6 +1,9 @@
 import { Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+/**
+ * Main footer component with navigation links
+ */
 export default function Footer() {
   const navigation = {
     platform: [

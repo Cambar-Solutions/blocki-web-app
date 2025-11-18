@@ -16,6 +16,8 @@ import {
   LayoutDashboard,
   Plus,
   HelpCircle,
+  User,
+  Shield,
 } from 'lucide-react'
 import { useState } from 'react'
 import { useTour } from '../../hooks/useTour'
@@ -26,7 +28,7 @@ export function Layout({ children }) {
   const navigate = useNavigate()
   const location = useLocation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { homeTour, dashboardTour, walletTour } = useTour()
+  const { homeTour, dashboardTour, walletTour, zkKYCTour } = useTour()
 
   const handleLogout = () => {
     logout()
@@ -41,6 +43,8 @@ export function Layout({ children }) {
       dashboardTour()
     } else if (path === '/wallet') {
       walletTour()
+    } else if (path === '/profile') {
+      zkKYCTour()
     } else {
       homeTour()
     }
@@ -136,7 +140,12 @@ export function Layout({ children }) {
                   <p className="text-sm font-semibold text-gray-900 dark:text-white">{user?.name}</p>
                   <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
                 </div>
-                <Avatar alt={user?.name} size="md" />
+                <Link to="/profile">
+                  <Avatar alt={user?.name} size="md" className="cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all" />
+                </Link>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/profile')} className="dark:hover:bg-gray-700">
+                  <User className="w-4 h-4" />
+                </Button>
                 <Button variant="ghost" size="sm" onClick={handleLogout} className="dark:hover:bg-gray-700">
                   <LogOut className="w-4 h-4" />
                 </Button>
@@ -185,6 +194,21 @@ export function Layout({ children }) {
                   </Link>
                 )
               })}
+
+              {/* Profile Link */}
+              <Link
+                to="/profile"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  isActive('/profile')
+                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
+                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                }`}
+              >
+                <User className="w-5 h-5" />
+                Mi Perfil
+                <Shield className="w-4 h-4 ml-auto text-purple-500" />
+              </Link>
 
               {/* Logout */}
               <button

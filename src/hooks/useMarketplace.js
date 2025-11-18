@@ -1,14 +1,35 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { marketplaceAPI } from '../services/api';
 import toast from 'react-hot-toast';
-import type { CreateListingDto, BuyTokensDto } from '../types/marketplace';
 
-export function useListings(params?: {
-  status?: string;
-  limit?: number;
-  offset?: number;
-  propertyId?: string;
-}) {
+/**
+ * @typedef {Object} ListingsParams
+ * @property {string} [status]
+ * @property {number} [limit]
+ * @property {number} [offset]
+ * @property {string} [propertyId]
+ */
+
+/**
+ * @typedef {Object} CreateListingDto
+ * @property {string} propertyId
+ * @property {number} amount
+ * @property {number} pricePerToken
+ * @property {string} currency
+ */
+
+/**
+ * @typedef {Object} BuyTokensDto
+ * @property {string} listingId
+ * @property {number} amount
+ * @property {string} paymentMethod
+ */
+
+/**
+ * Fetch marketplace listings with optional filters
+ * @param {ListingsParams} [params]
+ */
+export function useListings(params) {
   return useQuery({
     queryKey: ['listings', params],
     queryFn: async () => {
@@ -18,7 +39,11 @@ export function useListings(params?: {
   });
 }
 
-export function useListing(id?: string) {
+/**
+ * Fetch a single listing by ID
+ * @param {string} [id]
+ */
+export function useListing(id) {
   return useQuery({
     queryKey: ['listing', id],
     queryFn: async () => {
@@ -30,6 +55,9 @@ export function useListing(id?: string) {
   });
 }
 
+/**
+ * Fetch marketplace statistics
+ */
 export function useMarketStats() {
   return useQuery({
     queryKey: ['market-stats'],
@@ -41,7 +69,11 @@ export function useMarketStats() {
   });
 }
 
-export function useRecentTransactions(limit?: number) {
+/**
+ * Fetch recent transactions
+ * @param {number} [limit]
+ */
+export function useRecentTransactions(limit) {
   return useQuery({
     queryKey: ['recent-transactions', limit],
     queryFn: async () => {
@@ -52,11 +84,14 @@ export function useRecentTransactions(limit?: number) {
   });
 }
 
+/**
+ * Create a new listing mutation
+ */
 export function useCreateListing() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: CreateListingDto) => {
+    mutationFn: async (/** @type {CreateListingDto} */ data) => {
       const response = await marketplaceAPI.createListing(data);
       return response.data;
     },
@@ -75,11 +110,14 @@ export function useCreateListing() {
   });
 }
 
+/**
+ * Cancel a listing mutation
+ */
 export function useCancelListing() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (listingId: string) => {
+    mutationFn: async (/** @type {string} */ listingId) => {
       const response = await marketplaceAPI.cancelListing(listingId);
       return response.data;
     },
@@ -97,11 +135,14 @@ export function useCancelListing() {
   });
 }
 
+/**
+ * Buy tokens mutation
+ */
 export function useBuyTokens() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: BuyTokensDto) => {
+    mutationFn: async (/** @type {BuyTokensDto} */ data) => {
       const response = await marketplaceAPI.buy(data);
       return response.data;
     },

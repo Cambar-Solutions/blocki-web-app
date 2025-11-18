@@ -1,26 +1,43 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { Button } from './Button';
 
-interface Props {
-  children: ReactNode;
-  fallback?: ReactNode;
-}
+/**
+ * @typedef {Object} ErrorBoundaryProps
+ * @property {React.ReactNode} children
+ * @property {React.ReactNode} [fallback]
+ */
 
-interface State {
-  hasError: boolean;
-  error: Error | null;
-  errorInfo: ErrorInfo | null;
-}
+/**
+ * @typedef {Object} ErrorBoundaryState
+ * @property {boolean} hasError
+ * @property {Error | null} error
+ * @property {React.ErrorInfo | null} errorInfo
+ */
 
-class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false,
-    error: null,
-    errorInfo: null,
-  };
+/**
+ * Error Boundary component to catch and display React errors
+ * @extends {Component<ErrorBoundaryProps, ErrorBoundaryState>}
+ */
+class ErrorBoundary extends Component {
+  /**
+   * @param {ErrorBoundaryProps} props
+   */
+  constructor(props) {
+    super(props);
+    /** @type {ErrorBoundaryState} */
+    this.state = {
+      hasError: false,
+      error: null,
+      errorInfo: null,
+    };
+  }
 
-  public static getDerivedStateFromError(error: Error): State {
+  /**
+   * @param {Error} error
+   * @returns {ErrorBoundaryState}
+   */
+  static getDerivedStateFromError(error) {
     return {
       hasError: true,
       error,
@@ -28,7 +45,11 @@ class ErrorBoundary extends Component<Props, State> {
     };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  /**
+   * @param {Error} error
+   * @param {React.ErrorInfo} errorInfo
+   */
+  componentDidCatch(error, errorInfo) {
     console.error('Uncaught error:', error, errorInfo);
     this.setState({
       error,
@@ -36,7 +57,7 @@ class ErrorBoundary extends Component<Props, State> {
     });
   }
 
-  private handleReset = () => {
+  handleReset = () => {
     this.setState({
       hasError: false,
       error: null,
@@ -45,7 +66,7 @@ class ErrorBoundary extends Component<Props, State> {
     window.location.href = '/';
   };
 
-  public render() {
+  render() {
     if (this.state.hasError) {
       if (this.props.fallback) {
         return this.props.fallback;

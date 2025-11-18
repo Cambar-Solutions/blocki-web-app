@@ -4,6 +4,10 @@ import { useState } from 'react';
 import WalletConnect from '../wallet/WalletConnect';
 import { Button } from '../Button';
 
+/**
+ * Main navigation header component
+ * Responsive header with navigation links and wallet connection
+ */
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

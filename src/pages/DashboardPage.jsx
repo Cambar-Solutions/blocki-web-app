@@ -9,6 +9,10 @@ import { Building2, TrendingUp, DollarSign, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 
+/**
+ * Dashboard page - Main user dashboard with portfolio overview
+ * Shows wallet status, owned properties, investments, and recent transactions
+ */
 export default function DashboardPage() {
   const { isConnected, publicKey } = useWallet();
   const { data: portfolio, isLoading: portfolioLoading } = usePortfolio();

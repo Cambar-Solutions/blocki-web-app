@@ -4,26 +4,33 @@ import {
   generateKYCProof,
   verifyKYCProof,
   submitProofToStellar,
-  createVerifiableCredential,
-  ZKProof
+  createVerifiableCredential
 } from '../services/zkKYC';
 
-export interface ZKKYCState {
-  proof: ZKProof | null;
-  credential: string | null;
-  isVerified: boolean;
-  isLoading: boolean;
-  error: string | null;
-}
+/**
+ * @typedef {import('../services/zkKYC').ZKProof} ZKProof
+ */
 
 /**
  * React Hook for Zero-Knowledge KYC
  *
  * Enables privacy-preserving identity verification where users can prove
  * they meet requirements without revealing personal information
+ *
+ * @returns {{
+ *   proof: ZKProof | null,
+ *   credential: string | null,
+ *   isVerified: boolean,
+ *   isLoading: boolean,
+ *   error: string | null,
+ *   generateProof: (userAge: number, userCountry: string, verificationStatus: boolean) => Promise<ZKProof | null>,
+ *   submitToBlockchain: (zkProof: ZKProof, userPublicKey: string) => Promise<string | null>,
+ *   createCredential: (zkProof: ZKProof, userPublicKey: string) => Promise<string | null>,
+ *   verifyProof: (zkProof: ZKProof) => Promise<boolean>
+ * }}
  */
 export function useZKKYC() {
-  const [state, setState] = useState<ZKKYCState>({
+  const [state, setState] = useState({
     proof: null,
     credential: null,
     isVerified: false,
@@ -36,11 +43,7 @@ export function useZKKYC() {
    * User proves age >= 18, LATAM residency, and verification status
    * WITHOUT revealing actual age, country, or personal data
    */
-  const generateProof = useCallback(async (
-    userAge: number,
-    userCountry: string,
-    verificationStatus: boolean
-  ) => {
+  const generateProof = useCallback(async (userAge, userCountry, verificationStatus) => {
     setState(prev => ({ ...prev, isLoading: true, error: null }));
 
     try {
@@ -85,10 +88,7 @@ export function useZKKYC() {
    * Submit ZK proof to Stellar blockchain
    * Only a cryptographic commitment is stored on-chain, preserving privacy
    */
-  const submitToBlockchain = useCallback(async (
-    zkProof: ZKProof,
-    userPublicKey: string
-  ) => {
+  const submitToBlockchain = useCallback(async (zkProof, userPublicKey) => {
     setState(prev => ({ ...prev, isLoading: true }));
 
     try {
@@ -123,10 +123,7 @@ export function useZKKYC() {
    * Create a reusable verifiable credential from ZK proof
    * Can be used across the platform without re-verification
    */
-  const createCredential = useCallback(async (
-    zkProof: ZKProof,
-    userPublicKey: string
-  ) => {
+  const createCredential = useCallback(async (zkProof, userPublicKey) => {
     try {
       const { credential, expiresAt } = await createVerifiableCredential(
         zkProof,
@@ -153,7 +150,7 @@ export function useZKKYC() {
   /**
    * Verify an existing ZK proof
    */
-  const verifyProof = useCallback(async (zkProof: ZKProof) => {
+  const verifyProof = useCallback(async (zkProof) => {
     setState(prev => ({ ...prev, isLoading: true }));
 
     try {

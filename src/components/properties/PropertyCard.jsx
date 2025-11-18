@@ -3,15 +3,37 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '../ui/badge';
 import { Button } from '../Button';
 import { MapPin, Home, DollarSign } from 'lucide-react';
-import type { Property } from '../../types/property';
 
-interface PropertyCardProps {
-  property: Property;
-}
+/**
+ * @typedef {Object} Property
+ * @property {string} id
+ * @property {string} address
+ * @property {string} status
+ * @property {number} valuation
+ * @property {string} [tokenContractId]
+ * @property {number} [totalSupply]
+ * @property {Object} metadata
+ * @property {string[]} metadata.images
+ * @property {string} metadata.type
+ * @property {number} metadata.area
+ * @property {Object} metadata.location
+ * @property {string} metadata.location.city
+ * @property {string} metadata.location.state
+ */
 
-export default function PropertyCard({ property }: PropertyCardProps) {
+/**
+ * @typedef {Object} PropertyCardProps
+ * @property {Property} property
+ */
+
+/**
+ * Property card component for displaying property overview
+ * @param {PropertyCardProps} props
+ */
+export default function PropertyCard({ property }) {
   const getStatusBadge = () => {
-    const variants: Record<string, 'success' | 'warning' | 'info' | 'outline'> = {
+    /** @type {Record<string, 'success' | 'warning' | 'info' | 'outline'>} */
+    const variants = {
       tokenized: 'success',
       verified: 'info',
       pending: 'warning',

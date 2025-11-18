@@ -1,10 +1,11 @@
 import { Loader2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
-interface SpinnerProps {
-  className?: string;
-  size?: 'sm' | 'md' | 'lg';
-}
+/**
+ * @typedef {Object} SpinnerProps
+ * @property {string} [className]
+ * @property {'sm' | 'md' | 'lg'} [size]
+ */
 
 const sizeMap = {
   sm: 'w-4 h-4',
@@ -12,7 +13,11 @@ const sizeMap = {
   lg: 'w-12 h-12',
 };
 
-export function Spinner({ className, size = 'md' }: SpinnerProps) {
+/**
+ * Loading spinner component
+ * @param {SpinnerProps} props
+ */
+export function Spinner({ className, size = 'md' }) {
   return (
     <Loader2 className={cn('animate-spin', sizeMap[size], className)} />
   );

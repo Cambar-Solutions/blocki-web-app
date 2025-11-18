@@ -3,6 +3,19 @@ import { authAPI } from '../services/api';
 import { useWallet } from './useWallet';
 import toast from 'react-hot-toast';
 
+/**
+ * React Hook for Authentication
+ * Handles user login, logout, and session management using Stellar wallet signatures
+ *
+ * @returns {{
+ *   user: any | undefined,
+ *   isLoading: boolean,
+ *   isAuthenticated: boolean,
+ *   login: () => void,
+ *   logout: () => void,
+ *   isLoggingIn: boolean
+ * }}
+ */
 export function useAuth() {
   const { publicKey, signTransaction } = useWallet();
   const queryClient = useQueryClient();

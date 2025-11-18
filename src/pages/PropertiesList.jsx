@@ -7,8 +7,12 @@ import { Button } from '../components/Button';
 import { Spinner } from '../components/ui/spinner';
 import { Plus, AlertCircle } from 'lucide-react';
 
+/**
+ * Properties list page
+ * Browse all properties with filtering by status
+ */
 export default function PropertiesList() {
-  const [filter, setFilter] = useState<string | undefined>();
+  const [filter, setFilter] = useState(undefined);
   const { data: properties, isLoading, error } = useProperties({ status: filter });
   const { isConnected } = useWallet();
 

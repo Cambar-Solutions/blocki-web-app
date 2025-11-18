@@ -1,14 +1,41 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { propertiesAPI } from '../services/api';
 import toast from 'react-hot-toast';
-import type { CreatePropertyDto, TokenizePropertyDto } from '../types/property';
 
-export function useProperties(params?: {
-  limit?: number;
-  offset?: number;
-  status?: string;
-  type?: string;
-}) {
+/**
+ * @typedef {Object} PropertiesParams
+ * @property {number} [limit]
+ * @property {number} [offset]
+ * @property {string} [status]
+ * @property {string} [type]
+ */
+
+/**
+ * @typedef {Object} CreatePropertyDto
+ * @property {string} title
+ * @property {string} description
+ * @property {string} address
+ * @property {string} city
+ * @property {string} country
+ * @property {number} price
+ * @property {string} currency
+ * @property {string} propertyType
+ * @property {number} area
+ * @property {number} [bedrooms]
+ * @property {number} [bathrooms]
+ */
+
+/**
+ * @typedef {Object} TokenizePropertyDto
+ * @property {number} [totalTokens]
+ * @property {number} [pricePerToken]
+ */
+
+/**
+ * Fetch properties with optional filters
+ * @param {PropertiesParams} [params]
+ */
+export function useProperties(params) {
   return useQuery({
     queryKey: ['properties', params],
     queryFn: async () => {
@@ -18,7 +45,11 @@ export function useProperties(params?: {
   });
 }
 
-export function useProperty(id?: string) {
+/**
+ * Fetch a single property by ID
+ * @param {string} [id]
+ */
+export function useProperty(id) {
   return useQuery({
     queryKey: ['property', id],
     queryFn: async () => {
@@ -30,7 +61,11 @@ export function useProperty(id?: string) {
   });
 }
 
-export function usePropertyOwnership(id?: string) {
+/**
+ * Fetch property ownership distribution
+ * @param {string} [id]
+ */
+export function usePropertyOwnership(id) {
   return useQuery({
     queryKey: ['property-ownership', id],
     queryFn: async () => {
@@ -42,7 +77,12 @@ export function usePropertyOwnership(id?: string) {
   });
 }
 
-export function usePropertyHistory(id?: string, limit?: number) {
+/**
+ * Fetch property transaction history
+ * @param {string} [id]
+ * @param {number} [limit]
+ */
+export function usePropertyHistory(id, limit) {
   return useQuery({
     queryKey: ['property-history', id, limit],
     queryFn: async () => {
@@ -54,11 +94,14 @@ export function usePropertyHistory(id?: string, limit?: number) {
   });
 }
 
+/**
+ * Create a new property mutation
+ */
 export function useCreateProperty() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: CreatePropertyDto) => {
+    mutationFn: async (/** @type {CreatePropertyDto} */ data) => {
       const response = await propertiesAPI.create(data);
       return response.data;
     },
@@ -74,17 +117,14 @@ export function useCreateProperty() {
   });
 }
 
+/**
+ * Update a property mutation
+ */
 export function useUpdateProperty() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      id,
-      data,
-    }: {
-      id: string;
-      data: Partial<CreatePropertyDto>;
-    }) => {
+    mutationFn: async (/** @type {{ id: string, data: Partial<CreatePropertyDto> }} */ { id, data }) => {
       const response = await propertiesAPI.update(id, data);
       return response.data;
     },
@@ -101,17 +141,14 @@ export function useUpdateProperty() {
   });
 }
 
+/**
+ * Tokenize a property mutation
+ */
 export function useTokenizeProperty() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      propertyId,
-      data,
-    }: {
-      propertyId: string;
-      data?: TokenizePropertyDto;
-    }) => {
+    mutationFn: async (/** @type {{ propertyId: string, data?: TokenizePropertyDto }} */ { propertyId, data }) => {
       const response = await propertiesAPI.tokenize(propertyId, data);
       return response.data;
     },
@@ -130,11 +167,14 @@ export function useTokenizeProperty() {
   });
 }
 
+/**
+ * Upload property images mutation
+ */
 export function useUploadPropertyImages() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ propertyId, files }: { propertyId: string; files: File[] }) => {
+    mutationFn: async (/** @type {{ propertyId: string, files: File[] }} */ { propertyId, files }) => {
       const response = await propertiesAPI.uploadImages(propertyId, files);
       return response.data;
     },

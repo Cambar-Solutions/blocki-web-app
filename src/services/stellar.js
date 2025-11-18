@@ -29,8 +29,10 @@ export const server = new StellarSdk.Horizon.Server(currentNetwork.horizonUrl);
 
 /**
  * Get account details from the network
+ * @param {string} publicKey
+ * @returns {Promise<StellarSdk.Horizon.AccountResponse>}
  */
-export async function getAccount(publicKey: string) {
+export async function getAccount(publicKey) {
   try {
     const account = await server.loadAccount(publicKey);
     return account;
@@ -42,8 +44,10 @@ export async function getAccount(publicKey: string) {
 
 /**
  * Get account balance
+ * @param {string} publicKey
+ * @returns {Promise<StellarSdk.Horizon.HorizonApi.BalanceLine[]>}
  */
-export async function getAccountBalance(publicKey: string) {
+export async function getAccountBalance(publicKey) {
   try {
     const account = await getAccount(publicKey);
     return account.balances;
@@ -55,11 +59,16 @@ export async function getAccountBalance(publicKey: string) {
 
 /**
  * Create a basic payment transaction
+ * @param {string} sourcePublicKey
+ * @param {string} destinationPublicKey
+ * @param {string} amount
+ * @param {StellarSdk.Asset} [asset]
+ * @returns {Promise<StellarSdk.Transaction>}
  */
 export async function createPaymentTransaction(
-  sourcePublicKey: string,
-  destinationPublicKey: string,
-  amount: string,
+  sourcePublicKey,
+  destinationPublicKey,
+  amount,
   asset = StellarSdk.Asset.native()
 ) {
   try {
@@ -88,8 +97,10 @@ export async function createPaymentTransaction(
 
 /**
  * Submit a signed transaction to the network
+ * @param {StellarSdk.Transaction} transaction
+ * @returns {Promise<StellarSdk.Horizon.HorizonApi.SubmitTransactionResponse>}
  */
-export async function submitTransaction(transaction: StellarSdk.Transaction) {
+export async function submitTransaction(transaction) {
   try {
     const result = await server.submitTransaction(transaction);
     return result;
@@ -101,6 +112,7 @@ export async function submitTransaction(transaction: StellarSdk.Transaction) {
 
 /**
  * Generate a new keypair
+ * @returns {StellarSdk.Keypair}
  */
 export function generateKeypair() {
   return StellarSdk.Keypair.random();
@@ -108,8 +120,10 @@ export function generateKeypair() {
 
 /**
  * Fund account on testnet (only works on testnet)
+ * @param {string} publicKey
+ * @returns {Promise<any>}
  */
-export async function fundTestnetAccount(publicKey: string) {
+export async function fundTestnetAccount(publicKey) {
   try {
     const response = await fetch(
       `https://friendbot.stellar.org?addr=${encodeURIComponent(publicKey)}`

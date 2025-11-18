@@ -2,6 +2,10 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Building2, Shield, TrendingUp, Users, ArrowRight } from 'lucide-react';
 
+/**
+ * Home/Landing page component
+ * Features hero section, feature showcase, and CTA
+ */
 export default function HomePage() {
   const features = [
     {

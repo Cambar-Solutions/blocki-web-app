@@ -16,7 +16,21 @@ import {
   Info
 } from 'lucide-react';
 
-export function ZKKYCVerification({ userPublicKey }: { userPublicKey?: string }) {
+/**
+ * @typedef {Object} ZKKYCVerificationProps
+ * @property {string} [userPublicKey]
+ */
+
+/**
+ * Zero-Knowledge KYC Verification Component
+ *
+ * Demonstrates privacy-preserving identity verification using ZK proofs.
+ * Users can prove they meet requirements (age 18+, LATAM residency) WITHOUT
+ * revealing their actual personal data.
+ *
+ * @param {ZKKYCVerificationProps} props
+ */
+export function ZKKYCVerification({ userPublicKey }) {
   const { proof, isVerified, isLoading, generateProof, submitToBlockchain, createCredential } = useZKKYC();
 
   const [formData, setFormData] = useState({

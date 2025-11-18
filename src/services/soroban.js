@@ -4,8 +4,6 @@ import {
   TransactionBuilder,
   BASE_FEE,
   Networks,
-  Account,
-  Transaction,
   xdr
 } from '@stellar/stellar-sdk';
 import { SOROBAN_RPC_URL, NETWORK_PASSPHRASE, STELLAR_NETWORK } from '../lib/constants';
@@ -20,17 +18,19 @@ export const NETWORKS = {
     networkPassphrase: Networks.PUBLIC,
     sorobanRpcUrl: 'https://mainnet.sorobanrpc.com',
   },
-} as const;
+};
 
-const currentNetwork = NETWORKS[STELLAR_NETWORK as keyof typeof NETWORKS] || NETWORKS.testnet;
+const currentNetwork = NETWORKS[STELLAR_NETWORK] || NETWORKS.testnet;
 
 // Initialize Soroban RPC Server (NOT Horizon!)
 export const sorobanServer = new SorobanRpc.Server(SOROBAN_RPC_URL || currentNetwork.sorobanRpcUrl);
 
 /**
  * Get account from Soroban RPC
+ * @param {string} publicKey
+ * @returns {Promise<import('@stellar/stellar-sdk').Account>}
  */
-export async function getAccount(publicKey: string): Promise<Account> {
+export async function getAccount(publicKey) {
   try {
     const account = await sorobanServer.getAccount(publicKey);
     return account;
@@ -42,10 +42,10 @@ export async function getAccount(publicKey: string): Promise<Account> {
 
 /**
  * Simulate transaction before sending
+ * @param {import('@stellar/stellar-sdk').Transaction} transaction
+ * @returns {Promise<import('@stellar/stellar-sdk').SorobanRpc.Api.SimulateTransactionResponse>}
  */
-export async function simulateTransaction(
-  transaction: Transaction
-): Promise<SorobanRpc.Api.SimulateTransactionResponse> {
+export async function simulateTransaction(transaction) {
   try {
     const simulation = await sorobanServer.simulateTransaction(transaction);
 
@@ -62,10 +62,10 @@ export async function simulateTransaction(
 
 /**
  * Prepare transaction (simulate + assemble)
+ * @param {import('@stellar/stellar-sdk').Transaction} transaction
+ * @returns {Promise<import('@stellar/stellar-sdk').Transaction>}
  */
-export async function prepareTransaction(
-  transaction: Transaction
-): Promise<Transaction> {
+export async function prepareTransaction(transaction) {
   try {
     const simulation = await simulateTransaction(transaction);
 
@@ -82,12 +82,12 @@ export async function prepareTransaction(
 
 /**
  * Submit transaction to Soroban
+ * @param {string} signedXdr
+ * @returns {Promise<import('@stellar/stellar-sdk').SorobanRpc.Api.GetTransactionResponse>}
  */
-export async function submitTransaction(
-  signedXdr: string
-): Promise<SorobanRpc.Api.GetTransactionResponse> {
+export async function submitTransaction(signedXdr) {
   try {
-    const tx = TransactionBuilder.fromXDR(signedXdr, NETWORK_PASSPHRASE) as Transaction;
+    const tx = TransactionBuilder.fromXDR(signedXdr, NETWORK_PASSPHRASE);
     const response = await sorobanServer.sendTransaction(tx);
 
     if (response.status === 'ERROR') {
@@ -120,12 +120,12 @@ export async function submitTransaction(
 
 /**
  * Get contract events
+ * @param {string} contractId
+ * @param {number} startLedger
+ * @param {import('@stellar/stellar-sdk').SorobanRpc.Api.EventFilter[]} [filters]
+ * @returns {Promise<import('@stellar/stellar-sdk').SorobanRpc.Api.GetEventsResponse>}
  */
-export async function getContractEvents(
-  contractId: string,
-  startLedger: number,
-  filters?: SorobanRpc.Api.EventFilter[]
-): Promise<SorobanRpc.Api.GetEventsResponse> {
+export async function getContractEvents(contractId, startLedger, filters) {
   try {
     const events = await sorobanServer.getEvents({
       startLedger,
@@ -145,8 +145,9 @@ export async function getContractEvents(
 
 /**
  * Get latest ledger
+ * @returns {Promise<number>}
  */
-export async function getLatestLedger(): Promise<number> {
+export async function getLatestLedger() {
   try {
     const latestLedger = await sorobanServer.getLatestLedger();
     return latestLedger.sequence;
@@ -158,8 +159,9 @@ export async function getLatestLedger(): Promise<number> {
 
 /**
  * Health check
+ * @returns {Promise<boolean>}
  */
-export async function checkHealth(): Promise<boolean> {
+export async function checkHealth() {
   try {
     const health = await sorobanServer.getHealth();
     return health.status === 'healthy';
@@ -171,10 +173,10 @@ export async function checkHealth(): Promise<boolean> {
 
 /**
  * Get contract data
+ * @param {string} contractId
+ * @returns {Promise<import('@stellar/stellar-sdk').SorobanRpc.Api.LedgerEntryResult>}
  */
-export async function getContractData(
-  contractId: string
-): Promise<SorobanRpc.Api.LedgerEntryResult> {
+export async function getContractData(contractId) {
   try {
     const contractKey = xdr.LedgerKey.contractData(
       new xdr.LedgerKeyContractData({
@@ -199,14 +201,9 @@ export async function getContractData(
 
 /**
  * Create contract instance
+ * @param {string} contractId
+ * @returns {Contract}
  */
-export function createContract(contractId: string): Contract {
+export function createContract(contractId) {
   return new Contract(contractId);
 }
-
-// Export types
-export type {
-  SorobanRpc,
-  Transaction,
-  Account,
-};

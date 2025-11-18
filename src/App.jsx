@@ -12,6 +12,7 @@ import { PropertyView } from './pages/PropertyView'
 import { Dashboard } from './pages/Dashboard'
 import { Wallet } from './pages/Wallet'
 import { PublishProperty } from './pages/PublishProperty'
+import { Profile } from './pages/Profile'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -122,6 +123,14 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <PublishProperty />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRoute>
+                        <Profile />
                       </ProtectedRoute>
                     }
                   />

@@ -1,10 +1,14 @@
 import * as React from "react"
 import { cn } from "../../lib/utils"
 
-export interface LabelProps
-  extends React.LabelHTMLAttributes<HTMLLabelElement> {}
+/**
+ * @typedef {React.LabelHTMLAttributes<HTMLLabelElement>} LabelProps
+ */
 
-const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
+/**
+ * @type {React.ForwardRefExoticComponent<LabelProps & React.RefAttributes<HTMLLabelElement>>}
+ */
+const Label = React.forwardRef(
   ({ className, ...props }, ref) => (
     <label
       ref={ref}

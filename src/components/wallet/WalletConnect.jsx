@@ -4,6 +4,10 @@ import { Wallet, LogOut, AlertCircle } from 'lucide-react';
 import { Spinner } from '../ui/spinner';
 import { Badge } from '../ui/badge';
 
+/**
+ * Wallet connection component
+ * Displays connect button or wallet status with disconnect option
+ */
 export default function WalletConnect() {
   const { publicKey, isConnected, isLoading, error, network, connect, disconnect } =
     useWallet();

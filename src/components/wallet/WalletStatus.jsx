@@ -4,6 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { Badge } from '../ui/badge';
 import { Wallet, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 
+/**
+ * Wallet status display component
+ * Shows connected wallet details, network, and KYC status
+ */
 export default function WalletStatus() {
   const { publicKey, isConnected, network } = useWallet();
   const { data: user } = useUser();

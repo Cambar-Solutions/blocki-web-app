@@ -7,8 +7,12 @@ import { TrendingUp, ShoppingCart, DollarSign, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 
+/**
+ * Marketplace home page
+ * Displays market statistics and property token listings for sale
+ */
 export default function MarketplaceHome() {
-  const [statusFilter, setStatusFilter] = useState<string>('active');
+  const [statusFilter, setStatusFilter] = useState('active');
   const { data: listings, isLoading } = useListings({ status: statusFilter });
   const { data: stats } = useMarketStats();
 

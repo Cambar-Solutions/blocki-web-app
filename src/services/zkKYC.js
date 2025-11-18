@@ -8,32 +8,34 @@
  * Implementation based on zk-SNARKs principles for Stellar ecosystem.
  */
 
-export interface ZKProof {
-  proof: string;
-  publicSignals: string[];
-  verificationKey: string;
-}
+/**
+ * @typedef {Object} ZKProof
+ * @property {string} proof
+ * @property {string[]} publicSignals
+ * @property {string} verificationKey
+ */
 
-export interface KYCClaims {
-  isOver18: boolean;
-  isLatamResident: boolean;
-  isVerified: boolean;
-  verificationTimestamp: number;
-}
+/**
+ * @typedef {Object} KYCClaims
+ * @property {boolean} isOver18
+ * @property {boolean} isLatamResident
+ * @property {boolean} isVerified
+ * @property {number} verificationTimestamp
+ */
 
 /**
  * Generate a zero-knowledge proof that a user meets KYC requirements
  * without revealing their actual age, nationality, or personal data
+ * @param {number} userAge
+ * @param {string} userCountry
+ * @param {boolean} verificationStatus
+ * @returns {Promise<ZKProof>}
  */
-export async function generateKYCProof(
-  userAge: number,
-  userCountry: string,
-  verificat ionStatus: boolean
-): Promise<ZKProof> {
+export async function generateKYCProof(userAge, userCountry, verificationStatus) {
   // In production, this would use actual zk-SNARK libraries like snarkjs
   // For this hackathon demo, we simulate the proof generation process
 
-  const claims: KYCClaims = {
+  const claims = {
     isOver18: userAge >= 18,
     isLatamResident: isLatamCountry(userCountry),
     isVerified: verificationStatus,
@@ -50,8 +52,10 @@ export async function generateKYCProof(
 
 /**
  * Verify a zero-knowledge proof on-chain or off-chain
+ * @param {ZKProof} zkProof
+ * @returns {Promise<boolean>}
  */
-export async function verifyKYCProof(zkProof: ZKProof): Promise<boolean> {
+export async function verifyKYCProof(zkProof) {
   try {
     // In production, this would verify the zk-SNARK proof using verification key
     // The verifier learns ONLY that requirements are met, not the actual data
@@ -73,11 +77,11 @@ export async function verifyKYCProof(zkProof: ZKProof): Promise<boolean> {
 /**
  * Store ZK proof commitment on Stellar blockchain
  * Only the proof hash is stored, not the actual data
+ * @param {ZKProof} zkProof
+ * @param {string} userPublicKey
+ * @returns {Promise<string>}
  */
-export async function submitProofToStellar(
-  zkProof: ZKProof,
-  userPublicKey: string
-): Promise<string> {
+export async function submitProofToStellar(zkProof, userPublicKey) {
   // Create a hash commitment of the proof
   const proofCommitment = await hashProof(zkProof);
 
@@ -90,7 +94,12 @@ export async function submitProofToStellar(
 
 // Helper functions
 
-function isLatamCountry(country: string): boolean {
+/**
+ * Check if country is in LATAM
+ * @param {string} country
+ * @returns {boolean}
+ */
+function isLatamCountry(country) {
   const latamCountries = [
     'Argentina', 'Brasil', 'Chile', 'Colombia', 'Perú', 'México',
     'Venezuela', 'Ecuador', 'Bolivia', 'Paraguay', 'Uruguay',
@@ -103,7 +112,12 @@ function isLatamCountry(country: string): boolean {
   );
 }
 
-async function simulateProofGeneration(claims: KYCClaims): Promise<ZKProof> {
+/**
+ * Simulate zk-SNARK proof generation
+ * @param {KYCClaims} claims
+ * @returns {Promise<ZKProof>}
+ */
+async function simulateProofGeneration(claims) {
   // Simulate computational delay of zk-SNARK proof generation
   await new Promise(resolve => setTimeout(resolve, 500));
 
@@ -129,7 +143,12 @@ async function simulateProofGeneration(claims: KYCClaims): Promise<ZKProof> {
   };
 }
 
-async function simulateProofVerification(zkProof: ZKProof): Promise<boolean> {
+/**
+ * Simulate zk-SNARK proof verification
+ * @param {ZKProof} zkProof
+ * @returns {Promise<boolean>}
+ */
+async function simulateProofVerification(zkProof) {
   // Simulate verification computation
   await new Promise(resolve => setTimeout(resolve, 200));
 
@@ -149,7 +168,12 @@ async function simulateProofVerification(zkProof: ZKProof): Promise<boolean> {
   }
 }
 
-async function hashProof(zkProof: ZKProof): Promise<string> {
+/**
+ * Create hash commitment of proof
+ * @param {ZKProof} zkProof
+ * @returns {Promise<string>}
+ */
+async function hashProof(zkProof) {
   // In production, use SHA-256 or other cryptographic hash
   const proofString = JSON.stringify(zkProof);
 
@@ -167,14 +191,11 @@ async function hashProof(zkProof: ZKProof): Promise<string> {
 /**
  * Integration with Stellar: Create a verifiable credential
  * that can be used across the platform without re-verification
+ * @param {ZKProof} zkProof
+ * @param {string} userPublicKey
+ * @returns {Promise<{credential: string, expiresAt: number}>}
  */
-export async function createVerifiableCredential(
-  zkProof: ZKProof,
-  userPublicKey: string
-): Promise<{
-  credential: string;
-  expiresAt: number;
-}> {
+export async function createVerifiableCredential(zkProof, userPublicKey) {
   const expiresAt = Date.now() + (90 * 24 * 60 * 60 * 1000); // 90 days
 
   const credential = btoa(JSON.stringify({
