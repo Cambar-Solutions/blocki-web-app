@@ -26,7 +26,7 @@ export function HowItWorksModal({ isOpen, onClose }) {
     {
       icon: Coins,
       title: '4. Compra Tokens',
-      description: 'Invierte desde $2,500 MXN comprando fracciones (tokens) de propiedades inmobiliarias.',
+      description: 'Invierte desde $100 USD comprando fracciones (tokens) de propiedades inmobiliarias.',
       color: 'orange',
     },
     {
@@ -44,7 +44,7 @@ export function HowItWorksModal({ isOpen, onClose }) {
   ]
 
   const benefits = [
-    'Inversión mínima accesible desde $2,500 MXN',
+    'Inversión mínima accesible desde $100 USD',
     'Propiedades 100% verificadas y con documentación legal',
     'Transacciones seguras en Stellar Network',
     'ROI promedio del 8-15% anual',

@@ -125,7 +125,7 @@ export function Login() {
             </h1>
 
             <p className="text-xl text-blue-100">
-              Invierte en propiedades tokenizadas desde $2,500 MXN con la seguridad y transparencia de blockchain
+              Invierte en propiedades tokenizadas desde $100 USD con la seguridad y transparencia de blockchain
             </p>
           </div>
 
@@ -133,7 +133,7 @@ export function Login() {
             <FeatureItem
               icon={<Wallet className="w-6 h-6" />}
               title="Inversión Accesible"
-              description="Accede al mercado inmobiliario con montos desde $2,500 MXN"
+              description="Accede al mercado inmobiliario con montos desde $100 USD"
             />
             <FeatureItem
               icon={<Shield className="w-6 h-6" />}

@@ -30,7 +30,7 @@ export function PublishProperty() {
     type: 'RESIDENTIAL',
     address: '',
     city: '',
-    country: 'México',
+    country: 'Argentina',
 
     // Detalles de la Propiedad
     description: '',
@@ -59,14 +59,16 @@ export function PublishProperty() {
   ]
 
   const cities = [
-    'Ciudad de México',
-    'Guadalajara',
-    'Monterrey',
-    'Querétaro',
-    'Acapulco',
-    'Cancún',
-    'Puebla',
-    'Tijuana',
+    'Buenos Aires',
+    'São Paulo',
+    'Río de Janeiro',
+    'Santiago',
+    'Medellín',
+    'Bogotá',
+    'Lima',
+    'Montevideo',
+    'Quito',
+    'Ciudad de Panamá',
   ]
 
   const commonAmenities = [
@@ -360,10 +362,10 @@ export function PublishProperty() {
                 </div>
 
                 <div>
-                  <Label required>Valuación Total (MXN)</Label>
+                  <Label required>Valuación Total (USD)</Label>
                   <Input
                     type="number"
-                    placeholder="2500000"
+                    placeholder="250000"
                     value={formData.valuation}
                     onChange={(e) => handleInputChange('valuation', e.target.value)}
                     icon={DollarSign}
@@ -388,10 +390,10 @@ export function PublishProperty() {
                   </div>
 
                   <div>
-                    <Label required>Precio por Token (MXN)</Label>
+                    <Label required>Precio por Token (USD)</Label>
                     <Input
                       type="number"
-                      placeholder="2500"
+                      placeholder="250"
                       value={formData.tokenPrice}
                       onChange={(e) => handleInputChange('tokenPrice', e.target.value)}
                       icon={DollarSign}

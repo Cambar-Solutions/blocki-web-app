@@ -37,7 +37,7 @@ export interface BuyTokensDto {
 }
 
 export interface PaymentMethod {
-  currency: 'MXN' | 'USD' | 'USDC';
+  currency: 'USD' | 'USDC' | 'BRL' | 'ARS' | 'CLP' | 'COP' | 'PEN';
   amount: number;
   provider?: 'moneygram' | 'stripe' | 'wallet';
 }

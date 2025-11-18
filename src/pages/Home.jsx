@@ -22,7 +22,7 @@ export function Home() {
 
   const filteredProperties = filterProperties(filters)
 
-  const cities = ['Ciudad de México', 'Guadalajara', 'Monterrey', 'Querétaro', 'Acapulco']
+  const cities = ['Buenos Aires', 'São Paulo', 'Río de Janeiro', 'Santiago', 'Medellín', 'Lima']
   const types = [
     { value: 'RESIDENTIAL', label: 'Residencial' },
     { value: 'COMMERCIAL', label: 'Comercial' },
@@ -92,7 +92,7 @@ export function Home() {
               </h1>
 
               <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-xl animate-fadeIn leading-relaxed">
-                Invierte desde <span className="text-green-300 font-bold">$2,500 MXN</span> en propiedades tokenizadas.
+                Invierte desde <span className="text-green-300 font-bold">$100 USD</span> en propiedades tokenizadas.
                 Sin intermediarios, con seguridad blockchain y retornos verificables.
               </p>
 
